@@ -399,7 +399,24 @@
     display: grid; place-items: center;
   }
   .modal-close:hover { background: var(--rose); color: white; }
-  .modal iframe { flex: 1; width: 100%; border: 0; background: white; }
+  .modal iframe { flex: 1; width: 100%; height: 100%; border: 0; background: white; display: block; }
+  .modal-body { flex: 1; position: relative; min-height: 0; }
+  .modal-fallback {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px; text-align: center;
+    background: var(--bg-1);
+  }
+  .modal-fallback-icon { font-size: 48px; margin-bottom: 12px; }
+  .modal-fallback-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .modal-fallback-desc { color: var(--text-2); font-size: 14px; max-width: 420px; margin-bottom: 20px; }
+  .modal-foot {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+  }
+  .modal-foot-hint { font-size: 12px; color: var(--text-2); }
 
   /* ===== In-page demo (desktop tools) ===== */
   .demo-area {
@@ -1101,7 +1118,20 @@ python rename_by_template_gui.py</pre>
       <div class="modal-url" id="modalUrl">https://codehub.sj88ai.com/</div>
       <button class="modal-close" onclick="closeDemo()" title="Close (Esc)">✕</button>
     </div>
-    <iframe id="modalIframe" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" allow="autoplay; camera; microphone"></iframe>
+    <div class="modal-body">
+      <iframe id="modalIframe" sandbox="allow-scripts allow-forms allow-popups" allow="autoplay; camera; microphone"></iframe>
+      <div class="modal-fallback" id="modalFallback" style="display:none">
+        <div class="modal-fallback-icon">🔒</div>
+        <div class="modal-fallback-title">ไซต์ปลายทางบล็อก iframe</div>
+        <div class="modal-fallback-desc">เพื่อความปลอดภัย codehub.sj88ai.com ไม่อนุญาตให้ embed — กดปุ่มด้านล่างเพื่อเปิดในแท็บใหม่</div>
+        <a id="modalFallbackBtn" class="btn btn-primary" target="_blank" rel="noopener" href="#">↗ Open in new tab</a>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="closeDemo()">ปิด</button>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <span class="modal-foot-hint" id="modalHint">⌨ กด Esc เพื่อปิด · ↗ เปิด tab ใหม่</span>
+      <a id="modalNewTab" class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="#">↗ Open in new tab</a>
+    </div>
   </div>
 </div>
 
@@ -1123,16 +1153,36 @@ document.querySelectorAll('.demo-tab').forEach(tab => {
 const modal = document.getElementById('demoModal');
 const modalIframe = document.getElementById('modalIframe');
 const modalUrl = document.getElementById('modalUrl');
+const modalNewTab = document.getElementById('modalNewTab');
+const modalFallback = document.getElementById('modalFallback');
+const modalFallbackBtn = document.getElementById('modalFallbackBtn');
+
+let modalTimer = null;
 function openDemo(url, title) {
+  modalIframe.style.display = 'block';
+  modalFallback.style.display = 'none';
   modalIframe.src = url;
   modalUrl.textContent = url;
+  modalNewTab.href = url;
+  modalFallbackBtn.href = url;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  // Detect X-Frame-Options block: if iframe.onload never fires within 2.5s, show fallback
+  clearTimeout(modalTimer);
+  let loaded = false;
+  modalIframe.onload = () => { loaded = true; };
+  modalTimer = setTimeout(() => {
+    if (!loaded) {
+      modalIframe.style.display = 'none';
+      modalFallback.style.display = 'flex';
+    }
+  }, 2500);
 }
 function closeDemo() {
   modal.classList.remove('open');
   modalIframe.src = 'about:blank';
   document.body.style.overflow = '';
+  clearTimeout(modalTimer);
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
 modal.addEventListener('click', e => { if (e.target === modal) closeDemo(); });
