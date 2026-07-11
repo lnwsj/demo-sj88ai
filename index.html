@@ -412,11 +412,12 @@
   .modal-fallback-desc { color: var(--text-2); font-size: 14px; max-width: 420px; margin-bottom: 20px; }
   .modal-foot {
     display: flex; align-items: center; gap: 12px;
-    padding: 10px 16px;
+    padding: 14px 16px;
     background: var(--bg-2);
     border-top: 1px solid var(--line);
   }
   .modal-foot-hint { font-size: 12px; color: var(--text-2); }
+  .modal-foot .btn { margin-left: auto; }
 
   /* ===== In-page demo (desktop tools) ===== */
   .demo-area {
@@ -1129,8 +1130,8 @@ python rename_by_template_gui.py</pre>
       </div>
     </div>
     <div class="modal-foot">
-      <span class="modal-foot-hint" id="modalHint">⌨ กด Esc เพื่อปิด · ↗ เปิด tab ใหม่</span>
-      <a id="modalNewTab" class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="#">↗ Open in new tab</a>
+      <span class="modal-foot-hint" id="modalHint">⌨ กด Esc เพื่อปิด</span>
+      <a id="modalNewTab" class="btn btn-primary" target="_blank" rel="noopener" href="#">↗ Open in new tab · ใช้งานเต็มจอ</a>
     </div>
   </div>
 </div>
@@ -1157,7 +1158,6 @@ const modalNewTab = document.getElementById('modalNewTab');
 const modalFallback = document.getElementById('modalFallback');
 const modalFallbackBtn = document.getElementById('modalFallbackBtn');
 
-let modalTimer = null;
 function openDemo(url, title) {
   modalIframe.style.display = 'block';
   modalFallback.style.display = 'none';
@@ -1167,22 +1167,14 @@ function openDemo(url, title) {
   modalFallbackBtn.href = url;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  // Detect X-Frame-Options block: if iframe.onload never fires within 2.5s, show fallback
-  clearTimeout(modalTimer);
-  let loaded = false;
-  modalIframe.onload = () => { loaded = true; };
-  modalTimer = setTimeout(() => {
-    if (!loaded) {
-      modalIframe.style.display = 'none';
-      modalFallback.style.display = 'flex';
-    }
-  }, 2500);
+  // Note: some sites block iframe embedding via X-Frame-Options. The
+  // prominent "Open in new tab" button in the modal footer always works
+  // as a reliable fallback. We keep the iframe try for sites that allow it.
 }
 function closeDemo() {
   modal.classList.remove('open');
   modalIframe.src = 'about:blank';
   document.body.style.overflow = '';
-  clearTimeout(modalTimer);
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
 modal.addEventListener('click', e => { if (e.target === modal) closeDemo(); });
