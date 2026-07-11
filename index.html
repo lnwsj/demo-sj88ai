@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lnwsj · Apps Showcase — AI-built & AI-augmented tools</title>
+<meta name="description" content="Showcase of apps by lnwsj — web apps, desktop tools, and AI demos. Every card has a working interactive demo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design tokens ===== */
+  :root {
+    --bg-0: #0a0e1a;
+    --bg-1: #111827;
+    --bg-2: #1a2236;
+    --bg-3: #232b3f;
+    --line: #2a3450;
+    --line-2: #3a466a;
+    --text-0: #f5f6fa;
+    --text-1: #c9d0e0;
+    --text-2: #8892a8;
+    --text-3: #5b6478;
+    --amber: #f59e0b;
+    --amber-glow: rgba(245,158,11,0.18);
+    --emerald: #10b981;
+    --emerald-glow: rgba(16,185,129,0.18);
+    --rose: #f43f5e;
+    --rose-glow: rgba(244,63,94,0.18);
+    --cyan: #06b6d4;
+    --shadow-card: 0 8px 32px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-card-hover: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--line-2);
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter','Noto Sans Thai',-apple-system,sans-serif;
+    background: var(--bg-0);
+    color: var(--text-0);
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,158,11,0.10), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 20%, rgba(16,185,129,0.08), transparent),
+      radial-gradient(ellipse 50% 30% at 10% 30%, rgba(244,63,94,0.06), transparent);
+  }
+
+  /* ===== Layout ===== */
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+  /* ===== Top bar ===== */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(16px);
+    background: rgba(10,14,26,0.7);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 16px; letter-spacing: -0.01em;
+    text-decoration: none; color: var(--text-0);
+  }
+  .logo-mark {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--amber) 0%, var(--rose) 60%, var(--emerald) 100%);
+    display: grid; place-items: center; font-weight: 800; color: #0a0e1a;
+    font-size: 14px;
+  }
+  .nav { display: flex; gap: 28px; }
+  .nav a {
+    color: var(--text-2); text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav a:hover { color: var(--text-0); }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 100px;
+    background: var(--bg-2); border: 1px solid var(--line);
+    font-size: 12px; font-weight: 500; color: var(--text-1);
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--emerald);
+    box-shadow: 0 0 8px var(--emerald);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(135deg, var(--amber) 0%, var(--rose) 50%, var(--emerald) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: clamp(15px, 1.8vw, 18px);
+    color: var(--text-1);
+    max-width: 640px; margin: 0 auto 12px;
+  }
+  .hero-sub {
+    color: var(--text-2);
+    font-size: 14px;
+  }
+  .hero-sub b { color: var(--amber); }
+
+  .hero-stats {
+    display: flex; gap: 32px; justify-content: center;
+    margin-top: 40px; flex-wrap: wrap;
+  }
+  .stat {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .stat-num {
+    font-size: 32px; font-weight: 800;
+    background: linear-gradient(135deg, var(--amber), var(--emerald));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 12px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ===== Section heading ===== */
+  .section { padding: 40px 0 60px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-head h2 {
+    font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .section-head .tag {
+    font-size: 12px; color: var(--text-2);
+    padding: 4px 10px; border-radius: 100px;
+    background: var(--bg-2); border: 1px solid var(--line);
+  }
+  .section-head .desc {
+    margin-left: auto; color: var(--text-2); font-size: 14px;
+  }
+
+  /* ===== Card grid ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+  .grid-wide { grid-template-columns: 1fr; }
+  .grid-wide .card-feature { display: grid; grid-template-columns: 1.2fr 1fr; gap: 0; }
+  @media (max-width: 760px) {
+    .grid-wide .card-feature { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Card ===== */
+  .card {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.4s,
+                border-color 0.3s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--line-2);
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0;
+    border-radius: var(--radius); padding: 1px;
+    background: linear-gradient(135deg, transparent 0%, var(--accent-color, var(--amber)) 50%, transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .card:hover::before { opacity: 0.5; }
+
+  .card-preview {
+    aspect-ratio: 16/9;
+    background: var(--bg-2);
+    position: relative;
+    overflow: hidden;
+  }
+  .card-preview img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .card:hover .card-preview img { transform: scale(1.05); }
+  .card-preview-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(10,14,26,0.9) 100%);
+    display: flex; align-items: flex-end; padding: 14px;
+  }
+  .preview-badge {
+    font-size: 11px; font-weight: 600; color: var(--text-0);
+    padding: 4px 10px; border-radius: 100px;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .preview-badge .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--emerald);
+    box-shadow: 0 0 6px var(--emerald);
+  }
+
+  .card-body { padding: 22px; }
+  .card-meta {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+  .meta-pill {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 9px; border-radius: 6px;
+    background: var(--bg-2); color: var(--text-2);
+    border: 1px solid var(--line);
+  }
+  .meta-pill.amber { color: var(--amber); border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+  .meta-pill.emerald { color: var(--emerald); border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+  .meta-pill.rose { color: var(--rose); border-color: rgba(244,63,94,0.3); background: rgba(244,63,94,0.08); }
+  .meta-pill.cyan { color: var(--cyan); border-color: rgba(6,182,212,0.3); background: rgba(6,182,212,0.08); }
+
+  .card-title {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    color: var(--text-1); font-size: 14px; line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .card-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--amber) 0%, #ea580c 100%);
+    color: #0a0e1a;
+    box-shadow: 0 4px 12px rgba(245,158,11,0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(245,158,11,0.4);
+  }
+  .btn-secondary {
+    background: var(--bg-2); color: var(--text-0);
+    border: 1px solid var(--line);
+  }
+  .btn-secondary:hover { background: var(--bg-3); border-color: var(--line-2); }
+  .btn-ghost {
+    background: transparent; color: var(--text-1);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { color: var(--text-0); border-color: var(--line-2); background: var(--bg-2); }
+  .btn-sm { padding: 8px 14px; font-size: 13px; }
+
+  /* ===== Card feature (large web apps) ===== */
+  .card-feature .card-preview { aspect-ratio: 21/9; }
+  .card-feature .card-body { padding: 28px; }
+  .card-feature .card-title { font-size: 28px; }
+  .card-feature .card-desc { font-size: 15px; max-width: 580px; }
+
+  .feature-bullets {
+    list-style: none; margin: 0 0 18px; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 6px 18px;
+  }
+  .feature-bullets li {
+    font-size: 13px; color: var(--text-1);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .feature-bullets li::before {
+    content: '✦'; color: var(--amber); font-size: 12px;
+  }
+
+  /* ===== Mockup (desktop tools) ===== */
+  .mockup-wrap {
+    aspect-ratio: 16/9; padding: 24px;
+    background: var(--bg-2);
+    display: grid; place-items: center;
+    position: relative;
+  }
+  .mockup-window {
+    width: 100%; max-width: 480px;
+    background: var(--bg-1);
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .mockup-titlebar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 12px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--line);
+  }
+  .mockup-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--line-2);
+  }
+  .mockup-dot.red { background: #ef4444; }
+  .mockup-dot.amber { background: #f59e0b; }
+  .mockup-dot.green { background: #10b981; }
+  .mockup-titlebar .label {
+    margin-left: 8px; font-size: 11px; color: var(--text-2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .mockup-body { padding: 14px; min-height: 140px; }
+  .mockup-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 12px; }
+  .mockup-row label { color: var(--text-2); min-width: 80px; font-family: 'JetBrains Mono', monospace; }
+  .mockup-row .bar {
+    flex: 1; height: 6px; background: var(--bg-3); border-radius: 3px; overflow: hidden;
+  }
+  .mockup-row .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber), var(--rose));
+    width: 60%;
+  }
+  .mockup-btn {
+    padding: 4px 10px; border-radius: 5px;
+    background: var(--amber); color: #0a0e1a;
+    font-size: 11px; font-weight: 600;
+  }
+  .mockup-btn.ghost { background: var(--bg-3); color: var(--text-1); }
+  .mockup-list { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-2); }
+  .mockup-list div { padding: 3px 0; border-bottom: 1px dashed var(--line); }
+  .mockup-list div b { color: var(--emerald); }
+
+  /* ===== Modal (live demo) ===== */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal.open { display: flex; animation: modalIn 0.3s ease-out; }
+  @keyframes modalIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-frame {
+    width: 100%; max-width: 1280px; height: 90vh;
+    background: var(--bg-1);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    animation: modalScale 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes modalScale { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-dots { display: flex; gap: 6px; }
+  .modal-dots span { width: 12px; height: 12px; border-radius: 50%; background: var(--line-2); }
+  .modal-dots span:nth-child(1) { background: #ef4444; }
+  .modal-dots span:nth-child(2) { background: #f59e0b; }
+  .modal-dots span:nth-child(3) { background: #10b981; }
+  .modal-url {
+    flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text-2); padding: 6px 12px;
+    background: var(--bg-0); border-radius: 6px; border: 1px solid var(--line);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .modal-close {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--bg-3); border: 1px solid var(--line);
+    color: var(--text-1); cursor: pointer; font-size: 18px;
+    display: grid; place-items: center;
+  }
+  .modal-close:hover { background: var(--rose); color: white; }
+  .modal iframe { flex: 1; width: 100%; border: 0; background: white; }
+
+  /* ===== In-page demo (desktop tools) ===== */
+  .demo-area {
+    border-top: 1px solid var(--line);
+    background: var(--bg-1);
+  }
+  .demo-tabs {
+    display: flex; gap: 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .demo-tab {
+    padding: 10px 18px; font-size: 13px; font-weight: 500;
+    color: var(--text-2); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    background: transparent; border-top: 0; border-left: 0; border-right: 0;
+    font-family: inherit;
+    transition: color 0.2s;
+  }
+  .demo-tab:hover { color: var(--text-0); }
+  .demo-tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+  .demo-panel { display: none; padding: 24px; }
+  .demo-panel.active { display: block; }
+
+  /* --- Demo: PNG→JPG --- */
+  .dropzone {
+    border: 2px dashed var(--line-2);
+    border-radius: 12px;
+    padding: 40px 20px; text-align: center;
+    background: var(--bg-2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--amber);
+    background: rgba(245,158,11,0.05);
+  }
+  .dropzone-icon { font-size: 36px; margin-bottom: 8px; }
+  .dropzone-text { color: var(--text-1); font-size: 14px; }
+  .dropzone-text small { color: var(--text-2); display: block; margin-top: 4px; }
+  .dropzone input { display: none; }
+
+  .convert-controls {
+    display: flex; gap: 16px; align-items: center;
+    margin: 20px 0; flex-wrap: wrap;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 6px; min-width: 180px; }
+  .control-group label { font-size: 12px; color: var(--text-2); font-weight: 500; }
+  .control-group input[type=range] {
+    accent-color: var(--amber);
+    height: 4px;
+  }
+  .control-group .value {
+    font-family: 'JetBrains Mono', monospace; color: var(--amber); font-size: 12px;
+  }
+
+  .convert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  @media (max-width: 600px) { .convert-grid { grid-template-columns: 1fr; } }
+  .convert-tile {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .convert-tile-header {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .convert-tile-title { font-size: 12px; font-weight: 600; color: var(--text-1); }
+  .convert-tile-meta { font-size: 11px; color: var(--text-2); font-family: 'JetBrains Mono', monospace; }
+  .convert-tile img {
+    width: 100%; aspect-ratio: 4/3; object-fit: contain;
+    background: repeating-conic-gradient(#1a2236 0% 25%, #232b3f 0% 50%) 50% / 16px 16px;
+    border-radius: 6px;
+  }
+  .convert-tile-actions { display: flex; gap: 8px; }
+
+  /* --- Demo: Background Remover --- */
+  .bgremover-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px;
+  }
+  @media (max-width: 600px) { .bgremover-grid { grid-template-columns: 1fr; } }
+  .bgremover-tile {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px; min-height: 240px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px;
+  }
+  .bgremover-tile img {
+    max-width: 100%; max-height: 200px; object-fit: contain;
+    background: repeating-conic-gradient(#1a2236 0% 25%, #232b3f 0% 50%) 50% / 16px 16px;
+    border-radius: 6px;
+  }
+  .bgremover-status { font-size: 12px; color: var(--text-2); }
+  .bgremover-status .spin {
+    display: inline-block; width: 12px; height: 12px;
+    border: 2px solid var(--line-2); border-top-color: var(--amber);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    vertical-align: middle; margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* --- Demo: Batch Rename --- */
+  .rename-pattern {
+    display: flex; gap: 8px; align-items: center; margin: 16px 0;
+    padding: 14px; background: var(--bg-2); border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  .rename-pattern input {
+    flex: 1; padding: 8px 12px; background: var(--bg-0);
+    border: 1px solid var(--line); border-radius: 6px;
+    color: var(--text-0); font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .rename-pattern input:focus { outline: none; border-color: var(--amber); }
+  .rename-list {
+    border: 1px solid var(--line); border-radius: 10px;
+    overflow: hidden; max-height: 360px; overflow-y: auto;
+  }
+  .rename-list-head, .rename-row {
+    display: grid; grid-template-columns: 1fr 24px 1fr;
+    align-items: center; padding: 10px 14px; font-size: 12px;
+  }
+  .rename-list-head {
+    background: var(--bg-2); color: var(--text-2);
+    font-weight: 600; text-transform: uppercase; font-size: 11px;
+    letter-spacing: 0.05em; position: sticky; top: 0;
+  }
+  .rename-row { border-top: 1px solid var(--line); }
+  .rename-row .from { color: var(--text-2); font-family: 'JetBrains Mono', monospace; }
+  .rename-row .to { color: var(--emerald); font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+  .rename-row .arrow { text-align: center; color: var(--text-3); }
+  .rename-row.changed { background: rgba(16,185,129,0.05); }
+
+  /* --- Demo: MiniCut --- */
+  .vidcut-stage {
+    background: var(--bg-0); border-radius: 10px; padding: 12px;
+    border: 1px solid var(--line);
+  }
+  .vidcut-video {
+    width: 100%; max-height: 320px; background: #000; border-radius: 6px;
+  }
+  .vidcut-controls {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap;
+  }
+  .vidcut-time {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-2);
+  }
+  .vidcut-timeline {
+    position: relative; height: 48px; background: var(--bg-2);
+    border-radius: 6px; margin-top: 12px; cursor: pointer; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .vidcut-timeline video { display: none; }
+  .vidcut-timeline canvas { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+  .vidcut-range {
+    position: absolute; top: 0; bottom: 0;
+    background: rgba(245,158,11,0.18);
+    border-left: 2px solid var(--amber);
+    border-right: 2px solid var(--amber);
+    pointer-events: none;
+  }
+  .vidcut-handle {
+    position: absolute; top: 0; bottom: 0; width: 14px;
+    background: var(--amber); cursor: ew-resize;
+    transform: translateX(-50%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vidcut-handle::after {
+    content: '‖'; color: #0a0e1a; font-weight: 800; font-size: 12px;
+  }
+  .vidcut-handle.in { left: 0; }
+  .vidcut-handle.out { left: 100%; }
+  .vidcut-handle.hidden { display: none; }
+
+  /* ===== Footer ===== */
+  .footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 60px;
+    margin-top: 60px;
+    background: var(--bg-0);
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-text { color: var(--text-2); font-size: 13px; }
+  .footer-text b { color: var(--text-1); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a {
+    color: var(--text-2); text-decoration: none; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .footer-links a:hover { color: var(--amber); }
+
+  /* ===== Misc ===== */
+  .divider {
+    height: 1px; background: var(--line); margin: 0;
+  }
+  .kbd {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    padding: 2px 6px; border-radius: 4px;
+    background: var(--bg-2); border: 1px solid var(--line);
+    color: var(--text-1);
+  }
+  .github-stars {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--text-2);
+  }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--bg-3); border: 1px solid var(--line-2);
+    color: var(--text-0); padding: 12px 20px; border-radius: 10px;
+    font-size: 14px; z-index: 200; transition: transform 0.3s;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 720px) {
+    .nav { display: none; }
+    .hero { padding: 50px 0 40px; }
+    .section { padding: 30px 0 40px; }
+    .card-feature .card-preview { aspect-ratio: 16/9; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Top Bar ============ -->
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">L</div>
+      <span>lnwsj<span style="color:var(--text-3)"> · </span><span style="color:var(--text-2);font-weight:500">apps</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#web">Web Apps</a>
+      <a href="#tools">Desktop Tools</a>
+      <a href="https://github.com/lnwsj" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      <span>ผลงานจาก AI · AI-built & AI-augmented</span>
+    </div>
+    <h1>
+      Apps that <span class="grad">actually work</span>.<br>
+      Every. Single. Card.
+    </h1>
+    <p>2 web apps พร้อม live demo แบบเต็มจอ · 4 desktop tools ที่ port เป็นเว็บให้ลองได้ทันที</p>
+    <p class="hero-sub">กดปุ่ม <b>Launch / Try Now</b> ในแต่ละการ์ด — ใช้งานจริงได้เลย ไม่ใช่แค่รูป</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Apps</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Web · Live</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">In-browser ports</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Open source</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Web Apps ============ -->
+<section class="section" id="web">
+  <div class="container">
+    <div class="section-head">
+      <h2>🌐 Web Apps</h2>
+      <span class="tag">live · production</span>
+      <span class="desc">Hosted on codehub.sj88ai.com — กด Launch เปิดเต็มจอ</span>
+    </div>
+    <div class="grid grid-wide">
+
+      <!-- ===== FitCheck Studio ===== -->
+      <article class="card card-feature" style="--accent-color: #f43f5e">
+        <div class="card-preview">
+          <img src="./images/01-ui.png" alt="FitCheck Studio screenshot" loading="lazy" onerror="this.src='./images/v14-live-halloween.png'">
+          <div class="card-preview-overlay">
+            <span class="preview-badge"><span class="live-dot"></span> LIVE · codehub.sj88ai.com</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="meta-pill rose">Babylon.js</span>
+            <span class="meta-pill amber">3D</span>
+            <span class="meta-pill">Vanilla JS · 90KB</span>
+          </div>
+          <h3 class="card-title">👗 FitCheck Studio</h3>
+          <p class="card-desc">แต่งตัวให้หุ่น 3D ตามธีมงาน — Casual Friday, Board Meeting, Client Dinner, Halloween และอีก 4 ธีม พร้อม AI Fashion Advisor, Outfit Comparison, Daily Challenge และ Runway mode เดินเฉิดฉาย</p>
+          <ul class="feature-bullets">
+            <li>7 themes, 64+ items</li>
+            <li>8 hat types (drag & dress)</li>
+            <li>AI Fashion Advisor</li>
+            <li>Runway animation</li>
+            <li>Outfit A vs B compare</li>
+            <li>Daily challenge + share</li>
+          </ul>
+          <div class="card-actions">
+            <button class="btn btn-primary" onclick="openDemo('https://codehub.sj88ai.com/fitcheck/', 'FitCheck Studio')">
+              ▶ Launch Live Demo
+            </button>
+            <a class="btn btn-ghost" href="https://github.com/lnwsj/fitcheck-studio" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+              Source · 91KB
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== Karaoke Studio ===== -->
+      <article class="card card-feature" style="--accent-color: #06b6d4">
+        <div class="card-preview">
+          <img src="./images/karaoke-mock.png" alt="Karaoke Studio" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#06b6d4,#10b981)'; this.alt='Karaoke Studio — see live demo'">
+          <div class="card-preview-overlay">
+            <span class="preview-badge"><span class="live-dot"></span> LIVE · codehub.sj88ai.com</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="meta-pill cyan">Web Audio API</span>
+            <span class="meta-pill amber">ffmpeg.wasm</span>
+            <span class="meta-pill">Vanilla JS · 48KB</span>
+          </div>
+          <h3 class="card-title">🎤 Karaoke Subtitle Studio</h3>
+          <p class="card-desc">ทำ lyric video ในเบราว์เซอร์ ไม่อัปโหลด ไม่ใช้ server — ใส่ mp3, พิมพ์เนื้อเพลง, auto-detect จังหวะ, เลือกธีม + animation แล้ว export เป็น WebM/MP4 ฝั่ง client</p>
+          <ul class="feature-bullets">
+            <li>11 preset themes (Suno/Neon/Cyberpunk)</li>
+            <li>7 animation styles</li>
+            <li>Beat detection อัตโนมัติ</li>
+            <li>WebM + MP4 export</li>
+            <li>Custom color picker</li>
+            <li>JSON project save</li>
+          </ul>
+          <div class="card-actions">
+            <button class="btn btn-primary" onclick="openDemo('https://codehub.sj88ai.com/karaoke-studio/', 'Karaoke Studio')">
+              ▶ Launch Live Demo
+            </button>
+            <a class="btn btn-ghost" href="https://github.com/lnwsj/karaoke-studio" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+              Source · 48KB
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Desktop Tools (in-browser ports) ============ -->
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-head">
+      <h2>🛠 Desktop Tools · Try in browser</h2>
+      <span class="tag">python · ported to web</span>
+      <span class="desc">Original .py เป็น desktop app · port เป็นเว็บให้ลองก่อน install</span>
+    </div>
+    <div class="grid">
+
+      <!-- ===== MiniCut (Video Editor) ===== -->
+      <article class="card" style="--accent-color: #f59e0b">
+        <div class="mockup-wrap">
+          <div class="mockup-window">
+            <div class="mockup-titlebar">
+              <span class="mockup-dot red"></span>
+              <span class="mockup-dot amber"></span>
+              <span class="mockup-dot green"></span>
+              <span class="label">minicut · v1.0</span>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-row">
+                <label>timeline</label>
+                <div class="bar"><div class="bar-fill"></div></div>
+              </div>
+              <div class="mockup-row">
+                <label>duration</label>
+                <span class="mockup-btn">00:42</span>
+                <span class="mockup-btn ghost">trim</span>
+                <span class="mockup-btn ghost">split</span>
+              </div>
+              <div class="mockup-list">
+                <div>▶ <b>intro.mp4</b> 00:08</div>
+                <div>▶ <b>main.mp4</b> 00:24</div>
+                <div>▶ <b>outro.mp4</b> 00:10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="meta-pill amber">Flet · Python</span>
+            <span class="meta-pill">ffmpeg</span>
+            <span class="meta-pill">v1.0</span>
+          </div>
+          <h3 class="card-title">🎬 MiniCut — Video Editor</h3>
+          <p class="card-desc">โปรแกรมตัดต่อวิดีโอแบบเบาๆ single-timeline — นำเข้าไฟล์ mp4/mov/mkv, ตัด/แบ่ง/จัดลำดับ, ปรับเสียงรายคลิป แล้ว export เป็น mp4 ผ่าน ffmpeg</p>
+
+          <div class="demo-area">
+            <div class="demo-tabs">
+              <button class="demo-tab active" data-target="cut-demo">▶ Web Demo</button>
+              <button class="demo-tab" data-target="cut-info">📂 Run on desktop</button>
+            </div>
+
+            <div class="demo-panel active" id="cut-demo">
+              <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">ลองตัดต่อในเบราว์เซอร์ — อัปโหลดวิดีโอ → trim → download</p>
+              <div class="vidcut-stage">
+                <input type="file" id="cutFile" accept="video/*" style="display:none">
+                <button class="btn btn-secondary btn-sm" onclick="document.getElementById('cutFile').click()">📁 เลือกวิดีโอ</button>
+                <span id="cutFileName" class="vidcut-time" style="margin-left:8px">ยังไม่ได้เลือกไฟล์</span>
+                <video id="cutVideo" class="vidcut-video" controls style="margin-top:10px;display:none"></video>
+                <div class="vidcut-timeline" id="cutTimeline" style="display:none">
+                  <video id="cutThumbVideo" muted></video>
+                  <div class="vidcut-range" id="cutRange"></div>
+                  <div class="vidcut-handle in hidden" id="cutHandleIn"></div>
+                  <div class="vidcut-handle out hidden" id="cutHandleOut"></div>
+                </div>
+                <div class="vidcut-controls" id="cutControls" style="display:none">
+                  <span class="vidcut-time" id="cutTimeIn">00:00.0</span>
+                  <span class="vidcut-time">→</span>
+                  <span class="vidcut-time" id="cutTimeOut">--:--.-</span>
+                  <button class="btn btn-primary btn-sm" id="cutApplyBtn" style="margin-left:auto">✂️ Export Trim</button>
+                  <button class="btn btn-ghost btn-sm" id="cutResetBtn">Reset</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-panel" id="cut-info">
+              <p style="font-size:13px;color:var(--text-1);margin-bottom:12px">ติดตั้งบนเครื่อง (Python 3.8+ · Windows/Mac/Linux):</p>
+              <pre style="background:var(--bg-0);padding:12px;border-radius:8px;border:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-1);overflow-x:auto;line-height:1.6"><span style="color:var(--text-3)"># 1. clone</span>
+git clone https://github.com/lnwsj/lnwSJCut.git
+cd lnwSJCut
+
+<span style="color:var(--text-3)"># 2. install</span>
+pip install -r requirements.txt
+
+<span style="color:var(--text-3)"># 3. need ffmpeg in PATH</span>
+<span style="color:var(--text-3)">#    Windows: choco install ffmpeg</span>
+<span style="color:var(--text-3)">#    Mac:     brew install ffmpeg</span>
+
+<span style="color:var(--text-3)"># 4. launch</span>
+python app.py</pre>
+              <a class="btn btn-ghost btn-sm" style="margin-top:10px" href="https://github.com/lnwsj/lnwSJCut" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== PNG→JPG Converter ===== -->
+      <article class="card" style="--accent-color: #10b981">
+        <div class="mockup-wrap">
+          <div class="mockup-window">
+            <div class="mockup-titlebar">
+              <span class="mockup-dot red"></span>
+              <span class="mockup-dot amber"></span>
+              <span class="mockup-dot green"></span>
+              <span class="label">png → jpg converter</span>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-row"><label>input</label><span style="color:var(--emerald);font-size:11px;font-family:'JetBrains Mono',monospace">/photos/*.png</span></div>
+              <div class="mockup-row"><label>output</label><span style="color:var(--amber);font-size:11px;font-family:'JetBrains Mono',monospace">/jpg/</span></div>
+              <div class="mockup-row"><label>quality</label><div class="bar"><div class="bar-fill" style="width:85%"></div></div><span style="font-size:10px;color:var(--text-2)">85</span></div>
+              <div class="mockup-row"><label>progress</label><div class="bar"><div class="bar-fill" style="width:60%;background:linear-gradient(90deg,var(--emerald),var(--cyan))"></div></div><span style="font-size:10px;color:var(--emerald)">62/103</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="meta-pill emerald">Pillow · Python</span>
+            <span class="meta-pill">Tkinter GUI</span>
+            <span class="meta-pill">v1.0</span>
+          </div>
+          <h3 class="card-title">🖼️ PNG → JPG Batch Converter</h3>
+          <p class="card-desc">แปลง PNG เป็น JPG แบบ batch — ปรับ quality 60–100, เลือกพื้นหลังสำหรับ PNG โปร่งใส, progressive/optimize, subfolders, ZIP อัตโนมัติ</p>
+
+          <div class="demo-area">
+            <div class="demo-tabs">
+              <button class="demo-tab active" data-target="conv-demo">▶ Web Demo</button>
+              <button class="demo-tab" data-target="conv-info">📂 Run on desktop</button>
+            </div>
+
+            <div class="demo-panel active" id="conv-demo">
+              <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">ลาก/วาง PNG หลายไฟล์ → ปรับ quality → download เป็น JPG</p>
+              <label class="dropzone" id="convDrop">
+                <div class="dropzone-icon">📥</div>
+                <div class="dropzone-text">
+                  ลากไฟล์ PNG มาวางที่นี่ <small>หรือคลิกเพื่อเลือกหลายไฟล์</small>
+                </div>
+                <input type="file" id="convFile" accept="image/png" multiple>
+              </label>
+
+              <div class="convert-controls">
+                <div class="control-group">
+                  <label>JPEG Quality: <span class="value" id="convQVal">85</span></label>
+                  <input type="range" id="convQ" min="60" max="100" value="85">
+                </div>
+                <div class="control-group">
+                  <label>สีพื้นหลัง (สำหรับ PNG โปร่งใส)</label>
+                  <input type="color" id="convBg" value="#ffffff" style="width:60px;height:32px;border:1px solid var(--line);border-radius:6px;background:transparent;cursor:pointer">
+                </div>
+              </div>
+
+              <div id="convGrid" class="convert-grid" style="display:none"></div>
+            </div>
+
+            <div class="demo-panel" id="conv-info">
+              <pre style="background:var(--bg-0);padding:12px;border-radius:8px;border:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-1);line-height:1.6"><span style="color:var(--text-3)"># install</span>
+pip install pillow
+
+<span style="color:var(--text-3)"># run GUI</span>
+python png_to_jpg_gui.py</pre>
+              <a class="btn btn-ghost btn-sm" style="margin-top:10px" href="https://github.com/lnwsj/png_to_jpg_gui" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== Background Remover ===== -->
+      <article class="card" style="--accent-color: #06b6d4">
+        <div class="mockup-wrap">
+          <div class="mockup-window">
+            <div class="mockup-titlebar">
+              <span class="mockup-dot red"></span>
+              <span class="mockup-dot amber"></span>
+              <span class="mockup-dot green"></span>
+              <span class="label">remove bg · rembg</span>
+            </div>
+            <div class="mockup-body">
+              <div style="display:flex;gap:10px;align-items:center;justify-content:center;height:130px">
+                <div style="width:60px;height:60px;border-radius:50%;background:repeating-conic-gradient(#f43f5e 0% 25%,#f59e0b 0% 50%) 50%/12px 12px"></div>
+                <div style="font-size:18px;color:var(--rose)">→</div>
+                <div style="width:60px;height:60px;border-radius:50%;background:repeating-conic-gradient(#1a2236 0% 25%,#232b3f 0% 50%) 50%/12px 12px;position:relative">
+                  <div style="position:absolute;inset:14px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f43f5e)"></div>
+                </div>
+              </div>
+              <div class="mockup-row"><label>model</label><span class="mockup-btn ghost" style="font-size:10px">u2net_human_seg</span></div>
+              <div class="mockup-row"><label>status</label><span style="color:var(--emerald);font-size:11px;font-family:'JetBrains Mono',monospace">✓ 12 cutout</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="meta-pill cyan">rembg · AI</span>
+            <span class="meta-pill">Tkinter GUI</span>
+            <span class="meta-pill">u2net + isnet</span>
+          </div>
+          <h3 class="card-title">✂️ Human Cutout (Background Remover)</h3>
+          <p class="card-desc">ลบพื้นหลังภาพคนด้วย AI (u2net_human_seg) — เลือก output เป็น transparent / solid color / blurred background, ปรับ mask edge, ZIP อัตโนมัติ</p>
+
+          <div class="demo-area">
+            <div class="demo-tabs">
+              <button class="demo-tab active" data-target="bg-demo">▶ Web Demo</button>
+              <button class="demo-tab" data-target="bg-info">📂 Run on desktop</button>
+            </div>
+
+            <div class="demo-panel active" id="bg-demo">
+              <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">⚠️ โหลดโมเดล AI ครั้งแรก ~5MB · รันในเบราว์เซอร์ด้วย ONNX runtime</p>
+              <label class="dropzone" id="bgDrop">
+                <div class="dropzone-icon">🪄</div>
+                <div class="dropzone-text">
+                  อัปโหลดรูปคน <small>JPG/PNG · AI จะลบพื้นหลังให้อัตโนมัติ</small>
+                </div>
+                <input type="file" id="bgFile" accept="image/*">
+              </label>
+
+              <div class="bgremover-grid" id="bgGrid" style="display:none">
+                <div class="bgremover-tile">
+                  <div class="bgremover-status" style="align-self:flex-start">Original</div>
+                  <img id="bgOriginal" alt="original">
+                </div>
+                <div class="bgremover-tile">
+                  <div class="bgremover-status" id="bgStatus">ยังไม่ประมวลผล</div>
+                  <img id="bgResult" alt="result" style="display:none">
+                </div>
+              </div>
+              <div id="bgActions" style="display:none;margin-top:12px;text-align:right">
+                <button class="btn btn-primary btn-sm" id="bgDownloadBtn">⬇ Download PNG (transparent)</button>
+              </div>
+            </div>
+
+            <div class="demo-panel" id="bg-info">
+              <pre style="background:var(--bg-0);padding:12px;border-radius:8px;border:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-1);line-height:1.6"><span style="color:var(--text-3)"># install (model auto-downloads on first run)</span>
+pip install rembg pillow
+
+<span style="color:var(--text-3)"># run GUI</span>
+python human_cutout_gui.py</pre>
+              <a class="btn btn-ghost btn-sm" style="margin-top:10px" href="https://github.com/lnwsj/remove-bg-free" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== Batch Rename ===== -->
+      <article class="card" style="--accent-color: #f43f5e">
+        <div class="mockup-wrap">
+          <div class="mockup-window">
+            <div class="mockup-titlebar">
+              <span class="mockup-dot red"></span>
+              <span class="mockup-dot amber"></span>
+              <span class="mockup-dot green"></span>
+              <span class="label">batch rename by template</span>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-list">
+                <div>📄 <b style="color:var(--text-2)">report_v1.pdf</b> → <b>meeting_001.pdf</b></div>
+                <div>📄 <b style="color:var(--text-2)">doc_final.pdf</b> → <b>meeting_002.pdf</b></div>
+                <div>📄 <b style="color:var(--text-2)">notes.pdf</b> → <b>meeting_003.pdf</b></div>
+                <div>📄 <b style="color:var(--text-2)">data.pdf</b> → <b>meeting_004.pdf</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="meta-pill rose">Tkinter</span>
+            <span class="meta-pill amber">Natural Sort</span>
+            <span class="meta-pill">Windows</span>
+          </div>
+          <h3 class="card-title">🏷️ Batch Rename by Template</h3>
+          <p class="card-desc">เปลี่ยนชื่อไฟล์จำนวนมากตาม template — จับคู่ตาม Natural Sort (file2 ก่อน file10), แสดง preview ก่อน apply, ปลอดภัยด้วย 2-step rename (temp → final)</p>
+
+          <div class="demo-area">
+            <div class="demo-tabs">
+              <button class="demo-tab active" data-target="rn-demo">▶ Web Demo</button>
+              <button class="demo-tab" data-target="rn-info">📂 Run on desktop</button>
+            </div>
+
+            <div class="demo-panel active" id="rn-demo">
+              <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">เลือกไฟล์ → ตั้ง pattern → preview → download zip</p>
+              <label class="dropzone" id="rnDrop">
+                <div class="dropzone-icon">📂</div>
+                <div class="dropzone-text">เลือกไฟล์ที่ต้องการเปลี่ยนชื่อ <small>เลือกได้หลายไฟล์</small></div>
+                <input type="file" id="rnFile" multiple>
+              </label>
+
+              <div class="rename-pattern" id="rnControls" style="display:none">
+                <span style="font-size:13px;color:var(--text-1)">Pattern:</span>
+                <input type="text" id="rnPattern" value="file_{n}" placeholder="เช่น photo_{n} หรือ img-{n}">
+                <span style="font-size:11px;color:var(--text-2)">{n} = หมายเลขเรียงลำดับ</span>
+              </div>
+
+              <div class="rename-list" id="rnList" style="display:none">
+                <div class="rename-list-head">
+                  <div>Original</div>
+                  <div></div>
+                  <div>New name</div>
+                </div>
+                <div id="rnRows"></div>
+              </div>
+
+              <div id="rnActions" style="display:none;margin-top:12px;text-align:right">
+                <button class="btn btn-primary btn-sm" id="rnDownloadBtn">⬇ Download renamed (zip)</button>
+                <button class="btn btn-ghost btn-sm" id="rnResetBtn">Reset</button>
+              </div>
+            </div>
+
+            <div class="demo-panel" id="rn-info">
+              <pre style="background:var(--bg-0);padding:12px;border-radius:8px;border:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-1);line-height:1.6"><span style="color:var(--text-3)"># no dependencies (stdlib only)</span>
+
+<span style="color:var(--text-3)"># run GUI (Windows)</span>
+python rename_by_template_gui.py</pre>
+              <a class="btn btn-ghost btn-sm" style="margin-top:10px" href="https://github.com/lnwsj/rename_by_template_gui" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-text">
+      <b>lnwsj</b> · ผลงานจาก AI · Built with curiosity + caffeine
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/lnwsj" target="_blank" rel="noopener">🐙 GitHub</a>
+      <a href="https://codehub.sj88ai.com" target="_blank" rel="noopener">🚀 codehub.sj88ai.com</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Modal ============ -->
+<div class="modal" id="demoModal">
+  <div class="modal-frame">
+    <div class="modal-head">
+      <div class="modal-dots"><span></span><span></span><span></span></div>
+      <div class="modal-url" id="modalUrl">https://codehub.sj88ai.com/</div>
+      <button class="modal-close" onclick="closeDemo()" title="Close (Esc)">✕</button>
+    </div>
+    <iframe id="modalIframe" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" allow="autoplay; camera; microphone"></iframe>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied ✓</div>
+
+<script>
+/* ===================== Demo Tabs ===================== */
+document.querySelectorAll('.demo-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const card = tab.closest('.card');
+    card.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+    card.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    card.querySelector('#' + tab.dataset.target).classList.add('active');
+  });
+});
+
+/* ===================== Modal ===================== */
+const modal = document.getElementById('demoModal');
+const modalIframe = document.getElementById('modalIframe');
+const modalUrl = document.getElementById('modalUrl');
+function openDemo(url, title) {
+  modalIframe.src = url;
+  modalUrl.textContent = url;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDemo() {
+  modal.classList.remove('open');
+  modalIframe.src = 'about:blank';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
+modal.addEventListener('click', e => { if (e.target === modal) closeDemo(); });
+
+/* ===================== Toast ===================== */
+const toast = document.getElementById('toast');
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+/* ===================== Demo: MiniCut (Video Trimmer) ===================== */
+const cutFile = document.getElementById('cutFile');
+const cutVideo = document.getElementById('cutVideo');
+const cutThumbVideo = document.getElementById('cutThumbVideo');
+const cutTimeline = document.getElementById('cutTimeline');
+const cutRange = document.getElementById('cutRange');
+const cutHandleIn = document.getElementById('cutHandleIn');
+const cutHandleOut = document.getElementById('cutHandleOut');
+const cutTimeIn = document.getElementById('cutTimeIn');
+const cutTimeOut = document.getElementById('cutTimeOut');
+const cutControls = document.getElementById('cutControls');
+const cutFileName = document.getElementById('cutFileName');
+const cutApplyBtn = document.getElementById('cutApplyBtn');
+const cutResetBtn = document.getElementById('cutResetBtn');
+let cutUrl = null, cutIn = 0, cutOut = 0, cutDuration = 0;
+
+function fmtTime(s) {
+  if (!isFinite(s)) return '--:--.-';
+  const m = Math.floor(s/60);
+  const sec = (s%60).toFixed(1).padStart(4, '0');
+  return `${String(m).padStart(2,'0')}:${sec}`;
+}
+
+cutFile.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  if (cutUrl) URL.revokeObjectURL(cutUrl);
+  cutUrl = URL.createObjectURL(f);
+  cutVideo.src = cutUrl;
+  cutThumbVideo.src = cutUrl;
+  cutVideo.style.display = 'block';
+  cutTimeline.style.display = 'block';
+  cutControls.style.display = 'flex';
+  cutFileName.textContent = `${f.name} · ${(f.size/1024/1024).toFixed(1)}MB`;
+  cutVideo.onloadedmetadata = () => {
+    cutDuration = cutVideo.duration;
+    cutIn = 0; cutOut = cutDuration;
+    cutTimeIn.textContent = fmtTime(cutIn);
+    cutTimeOut.textContent = fmtTime(cutOut);
+    updateCutRange();
+  };
+});
+
+function updateCutRange() {
+  const pctIn = (cutIn / cutDuration) * 100;
+  const pctOut = (cutOut / cutDuration) * 100;
+  cutRange.style.left = pctIn + '%';
+  cutRange.style.width = (pctOut - pctIn) + '%';
+  cutHandleIn.style.left = pctIn + '%';
+  cutHandleOut.style.left = pctOut + '%';
+  cutHandleIn.classList.remove('hidden');
+  cutHandleOut.classList.remove('hidden');
+}
+
+// drag handles
+let dragHandle = null;
+function onDown(handle) { return e => { dragHandle = handle; e.preventDefault(); }; }
+function onMove(e) {
+  if (!dragHandle || !cutDuration) return;
+  const rect = cutTimeline.getBoundingClientRect();
+  const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  const t = x * cutDuration;
+  if (dragHandle === 'in') cutIn = Math.min(t, cutOut - 0.5);
+  else cutOut = Math.max(t, cutIn + 0.5);
+  cutTimeIn.textContent = fmtTime(cutIn);
+  cutTimeOut.textContent = fmtTime(cutOut);
+  updateCutRange();
+}
+function onUp() { dragHandle = null; }
+cutHandleIn.addEventListener('mousedown', onDown('in'));
+cutHandleOut.addEventListener('mousedown', onDown('out'));
+document.addEventListener('mousemove', onMove);
+document.addEventListener('mouseup', onUp);
+
+// click timeline to seek
+cutTimeline.addEventListener('click', e => {
+  if (e.target.classList.contains('vidcut-handle')) return;
+  const rect = cutTimeline.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width;
+  cutVideo.currentTime = x * cutDuration;
+});
+
+cutResetBtn.addEventListener('click', () => {
+  cutIn = 0; cutOut = cutDuration;
+  cutTimeIn.textContent = fmtTime(cutIn);
+  cutTimeOut.textContent = fmtTime(cutOut);
+  updateCutRange();
+  cutVideo.currentTime = 0;
+});
+
+cutApplyBtn.addEventListener('click', async () => {
+  if (!cutVideo.src) return;
+  cutApplyBtn.disabled = true;
+  cutApplyBtn.textContent = '⏳ Processing...';
+  try {
+    cutVideo.currentTime = cutIn;
+    await new Promise(r => setTimeout(r, 200));
+    const stream = cutVideo.captureStream();
+    const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    const chunks = [];
+    recorder.ondataavailable = e => chunks.push(e.data);
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `trim_${fmtTime(cutIn).replace(':','-')}_to_${fmtTime(cutOut).replace(':','-')}.webm`;
+      a.click();
+      showToast('Trim exported ✓');
+      cutApplyBtn.disabled = false;
+      cutApplyBtn.textContent = '✂️ Export Trim';
+    };
+    recorder.start();
+    cutVideo.play();
+    setTimeout(() => {
+      cutVideo.pause();
+      recorder.stop();
+    }, (cutOut - cutIn) * 1000);
+  } catch (err) {
+    showToast('Error: ' + err.message);
+    cutApplyBtn.disabled = false;
+    cutApplyBtn.textContent = '✂️ Export Trim';
+  }
+});
+
+/* ===================== Demo: PNG→JPG Converter ===================== */
+const convFile = document.getElementById('convFile');
+const convDrop = document.getElementById('convDrop');
+const convGrid = document.getElementById('convGrid');
+const convQ = document.getElementById('convQ');
+const convQVal = document.getElementById('convQVal');
+const convBg = document.getElementById('convBg');
+let convResults = [];
+
+convQ.addEventListener('input', () => convQVal.textContent = convQ.value);
+
+['dragover','dragenter'].forEach(ev => convDrop.addEventListener(ev, e => { e.preventDefault(); convDrop.classList.add('dragover'); }));
+['dragleave','drop'].forEach(ev => convDrop.addEventListener(ev, e => { e.preventDefault(); convDrop.classList.remove('dragover'); }));
+convDrop.addEventListener('drop', e => { handleConvFiles(e.dataTransfer.files); });
+convFile.addEventListener('change', e => handleConvFiles(e.target.files));
+
+function handleConvFiles(files) {
+  Array.from(files).forEach(f => {
+    if (!f.type.includes('png')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = convBg.value;
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img, 0, 0);
+        const jpg = canvas.toDataURL('image/jpeg', parseInt(convQ.value)/100);
+        convResults.push({ name: f.name.replace('.png','.jpg'), data: jpg, origSize: f.size, newSize: Math.round(jpg.length*0.75) });
+        renderConvGrid();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderConvGrid() {
+  if (!convResults.length) { convGrid.style.display='none'; return; }
+  convGrid.style.display = 'grid';
+  convGrid.innerHTML = '';
+  convResults.forEach((r, i) => {
+    const tile = document.createElement('div');
+    tile.className = 'convert-tile';
+    const origKB = (r.origSize/1024).toFixed(1);
+    const newKB = (r.newSize/1024).toFixed(1);
+    const saved = Math.max(0, Math.round((1 - r.newSize/r.origSize)*100));
+    tile.innerHTML = `
+      <div class="convert-tile-header">
+        <div class="convert-tile-title">${r.name}</div>
+        <div class="convert-tile-meta">${origKB}KB → ${newKB}KB (-${saved}%)</div>
+      </div>
+      <img src="${r.data}" alt="${r.name}">
+      <div class="convert-tile-actions">
+        <button class="btn btn-primary btn-sm" data-i="${i}">⬇ JPG</button>
+        <button class="btn btn-ghost btn-sm" data-rm="${i}">✕</button>
+      </div>
+    `;
+    convGrid.appendChild(tile);
+  });
+  convGrid.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', e => downloadConv(convResults[e.target.dataset.i])));
+  convGrid.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', e => { convResults.splice(+e.target.dataset.rm,1); renderConvGrid(); }));
+}
+
+function downloadConv(r) {
+  const a = document.createElement('a');
+  a.href = r.data;
+  a.download = r.name;
+  a.click();
+  showToast(`Downloaded ${r.name}`);
+}
+
+/* ===================== Demo: Background Remover ===================== */
+const bgFile = document.getElementById('bgFile');
+const bgDrop = document.getElementById('bgDrop');
+const bgOriginal = document.getElementById('bgOriginal');
+const bgResult = document.getElementById('bgResult');
+const bgStatus = document.getElementById('bgStatus');
+const bgGrid = document.getElementById('bgGrid');
+const bgActions = document.getElementById('bgActions');
+const bgDownloadBtn = document.getElementById('bgDownloadBtn');
+let bgResultBlob = null;
+
+['dragover','dragenter'].forEach(ev => bgDrop.addEventListener(ev, e => { e.preventDefault(); bgDrop.classList.add('dragover'); }));
+['dragleave','drop'].forEach(ev => bgDrop.addEventListener(ev, e => { e.preventDefault(); bgDrop.classList.remove('dragover'); }));
+bgDrop.addEventListener('drop', e => handleBgFile(e.dataTransfer.files[0]));
+bgFile.addEventListener('change', e => handleBgFile(e.target.files[0]));
+
+// Use canvas-based "remove bg" via chroma-key-like edge detection on light backgrounds
+// For more accuracy, use @imgly/background-removal from CDN
+async function handleBgFile(file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { showToast('กรุณาเลือกไฟล์รูปภาพ'); return; }
+  bgGrid.style.display = 'grid';
+  bgActions.style.display = 'none';
+  bgResult.style.display = 'none';
+  bgStatus.innerHTML = '<span class="spin"></span>กำลังโหลดโมเดล AI...';
+
+  const origUrl = URL.createObjectURL(file);
+  bgOriginal.src = origUrl;
+  bgResultBlob = null;
+
+  try {
+    // Try @imgly/background-removal (CDN ESM)
+    bgStatus.innerHTML = '<span class="spin"></span>กำลังประมวลผล (โหลดโมเดลครั้งแรก ~5-10s)...';
+    const mod = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm');
+    const blob = await mod.removeBackground(origUrl);
+    bgResultBlob = blob;
+    bgResult.src = URL.createObjectURL(blob);
+    bgResult.style.display = 'block';
+    bgStatus.textContent = '✓ เสร็จแล้ว';
+    bgActions.style.display = 'block';
+    showToast('Background removed ✓');
+  } catch (err) {
+    console.error(err);
+    bgStatus.innerHTML = `<span style="color:var(--rose)">⚠ โมเดล AI โหลดไม่สำเร็จ (${err.message?.slice(0,40) || 'network'})</span><br><small>ลองติดตั้ง desktop version แทน</small>`;
+  }
+}
+
+bgDownloadBtn.addEventListener('click', () => {
+  if (!bgResultBlob) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(bgResultBlob);
+  a.download = 'cutout.png';
+  a.click();
+});
+
+/* ===================== Demo: Batch Rename ===================== */
+const rnFile = document.getElementById('rnFile');
+const rnDrop = document.getElementById('rnDrop');
+const rnControls = document.getElementById('rnControls');
+const rnPattern = document.getElementById('rnPattern');
+const rnList = document.getElementById('rnList');
+const rnRows = document.getElementById('rnRows');
+const rnActions = document.getElementById('rnActions');
+const rnResetBtn = document.getElementById('rnResetBtn');
+const rnDownloadBtn = document.getElementById('rnDownloadBtn');
+let rnFiles = [];
+
+function naturalSort(a, b) {
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+}
+
+['dragover','dragenter'].forEach(ev => rnDrop.addEventListener(ev, e => { e.preventDefault(); rnDrop.classList.add('dragover'); }));
+['dragleave','drop'].forEach(ev => rnDrop.addEventListener(ev, e => { e.preventDefault(); rnDrop.classList.remove('dragover'); }));
+rnDrop.addEventListener('drop', e => handleRnFiles(e.dataTransfer.files));
+rnFile.addEventListener('change', e => handleRnFiles(e.target.files));
+rnPattern.addEventListener('input', renderRn);
+
+function handleRnFiles(files) {
+  if (!files.length) return;
+  rnFiles = Array.from(files);
+  rnControls.style.display = 'flex';
+  rnList.style.display = 'block';
+  rnActions.style.display = 'block';
+  renderRn();
+}
+
+function pad(n, w) { return String(n).padStart(w, '0'); }
+
+function renderRn() {
+  if (!rnFiles.length) return;
+  const sorted = rnFiles.slice().sort((a,b) => naturalSort(a.name, b.name));
+  const pat = rnPattern.value || 'file_{n}';
+  const exts = sorted.map(f => f.name.match(/\.[^.]+$/)?.[0] || '');
+  const w = String(sorted.length).length;
+  rnRows.innerHTML = '';
+  sorted.forEach((f, i) => {
+    const ext = exts[i];
+    const newName = pat.replace(/\{n\}/g, pad(i+1, w)) + ext;
+    const row = document.createElement('div');
+    row.className = 'rename-row';
+    if (newName !== f.name) row.classList.add('changed');
+    row.innerHTML = `
+      <div class="from">${f.name}</div>
+      <div class="arrow">→</div>
+      <div class="to">${newName}</div>
+    `;
+    rnRows.appendChild(row);
+  });
+}
+
+rnResetBtn.addEventListener('click', () => {
+  rnFiles = [];
+  rnControls.style.display = 'none';
+  rnList.style.display = 'none';
+  rnActions.style.display = 'none';
+});
+
+rnDownloadBtn.addEventListener('click', async () => {
+  if (!rnFiles.length) return;
+  showToast('Building zip...');
+  const sorted = rnFiles.slice().sort((a,b) => naturalSort(a.name, b.name));
+  const pat = rnPattern.value || 'file_{n}';
+  const w = String(sorted.length).length;
+  // Use JSZip from CDN
+  try {
+    const { default: JSZip } = await import('https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm');
+    const zip = new JSZip();
+    sorted.forEach((f, i) => {
+      const ext = f.name.match(/\.[^.]+$/)?.[0] || '';
+      const newName = pat.replace(/\{n\}/g, pad(i+1, w)) + ext;
+      zip.file(newName, f);
+    });
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'renamed_files.zip';
+    a.click();
+    showToast(`Zipped ${sorted.length} files ✓`);
+  } catch (err) {
+    showToast('Zip error: ' + err.message);
+  }
+});
+
+/* ===================== Init ===================== */
+renderRn = renderRn || function(){};
+</script>
+</body>
+</html>
